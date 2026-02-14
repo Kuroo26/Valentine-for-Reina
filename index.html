@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Valentine For You 💕</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:'Poppins', sans-serif;
+    background: linear-gradient(to bottom, #ffe4ec, #ffc1d6, #ffb6c1);
+    text-align:center;
+    overflow-y:hidden;   /* kunci scroll bawah untuk halaman utama */
+}
+    
+
+.page{
+    position:absolute;
+    width:100%;
+    height:110vh;
+    top:0;
+    left:0;
+    opacity:0;
+    transform:translateY(20px);
+    transition:all 0.5s ease;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.page.active{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+}
+
+@keyframes fade{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+    
+#surat,
+#bunga{
+    overflow-y:auto;     /* hanya ini bisa scroll */
+}
+  
+
+/* ===================== */
+/* HALAMAN AWAL */
+/* ===================== */
+
+.valentine-page{
+    position:relative;
+    overflow:hidden;
+}
+ 
+ .for-name{
+    margin-top:100px;
+    font-size:15px;
+    letter-spacing:3px;
+    color:#ff4d88;
+    font-weight:500;
+    text-shadow:0 4px 10px rgba(255,105,135,0.3);
+}
+
+.decor-left{
+    position:absolute;
+    left:0;
+    top:1px;
+    width:110px;
+}
+
+.decor-right{
+    position:absolute;
+    right:10px;
+    top:10px;
+    width:100px;
+}
+
+.decor-bottom{
+    position:absolute;
+    left:10px;
+    bottom:50px;
+    width:80px;
+}
+
+.title{
+    margin-top:140px;
+    font-size:26px;
+    color:#a3004f;
+    text-shadow:0 4px 12px rgba(255,105,135,0.25);
+}
+
+button{
+    padding:12px 25px;
+    border:none;
+    border-radius:25px;
+    margin:10px;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 8px 20px rgba(255,105,135,0.25);
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.yes-btn{
+    background:#ff4d88;
+    color:white;
+}
+
+.no-btn{
+    background:#ffc1d6;
+    color:#a3004f;
+}
+
+/* ===================== */
+/* MAIN MENU */
+/* ===================== */
+
+.menu-decor{
+    position:absolute;
+    width:80px;  /* sesuaikan ukuran */
+    z-index:1;   /* supaya tetap di belakang konten */
+    opacity:0.9; /* sedikit transparan biar estetik */
+}
+
+.menu-decor.top-left{
+    top:10px;
+    width:150px;
+    left:90px;
+}
+
+.menu-decor.top-right{
+    top:60px;
+    right:1px;
+    width:120px;
+}
+
+.menu-decor.bottom-left{
+    bottom:5px;
+    left:5px;
+    width:150px;
+}
+
+.menu-decor.bottom-right{
+    bottom:1px;
+    right:1px;
+    width:200px;
+}
+
+/* Optional: hover animasi ringan */
+.menu-decor:hover{
+    transform: scale(1.05) rotate(-2deg);
+    transition: 0.3s;
+}
+    
+.card-container{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+    max-width:300px;
+    margin:80px auto;
+}
+
+.card{
+    background: linear-gradient(145deg, #ff4d88, #ff80aa);
+    color:white;
+    padding:35px;
+    border-radius:25px;
+    font-size:32px;
+    box-shadow:0 15px 35px rgba(255,20,147,0.35);
+    cursor:pointer;
+    transition:all 0.3s ease;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+}
+
+.card:hover{
+    transform:scale(1.08);
+    box-shadow:0 20px 45px rgba(255,20,147,0.5);
+}
+    
+.card::before{
+    content:"";
+    position:absolute;
+    width:80%;
+    height:80%;
+    background:rgba(255,255,255,0.1);
+    border-radius:20px;
+    filter:blur(20px);
+    z-index:-1;
+}
+ 
+.foto-card{
+    background: rgba(255, 20, 147, 0.25);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(255, 20, 147, 0.35);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+ 
+.foto-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-75%;
+    width:50%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        rgba(255,255,255,0.4),
+        rgba(255,255,255,0)
+    );
+    transform:skewX(-25deg);
+    transition:0.7s;
+}
+
+.foto-card:hover::before{
+    left:125%;
+}
+ 
+.foto-card:hover{
+    transform: scale(1.08);
+    box-shadow: 0 15px 40px rgba(255,20,147,0.6);
+}
+
+/* ===================== */
+/* GALLERY FOTO */
+/* ===================== */
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    padding:20px;
+    max-width:400px;
+    margin:20px auto;
+}
+
+.gallery img{
+    width:100%;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(255,105,135,0.25);
+    transition:0.3s;
+}
+
+.gallery img:hover{
+    transform:scale(1.05);
+}
+
+/* ===================== */
+/* SURAT SCROLL EFFECT */
+/* ===================== */
+
+.scroll-page{
+    height:100vh;
+    overflow-y:auto;
+    padding:20px;
+    scroll-behavior:smooth;
+}
+
+.letter-header{
+    margin-top:60px;
+    margin-bottom:60px;
+    text-align:center;
+    max-width:400px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.letter-header h2{
+    color:#b03060;
+}
+
+.letter-header p{
+    font-size:14px;
+    color:#555;
+    line-height:1.6;
+}
+
+.single-letter{
+    max-width:400px;
+    margin:0 auto 40px;
+}
+    
+.single-letter img{
+    width:100%;
+    border-radius:20px;
+    box-shadow:0 15px 35px rgba(255,105,135,0.25);
+}
+
+/* ===================== */
+/* PITA PAGE */
+/* ===================== */
+
+/* Hanya halaman Pita yang bisa scroll */
+#pita {
+    position: absolute;   /* sesuaikan dengan .page lain */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;        /* penuh layar */
+    overflow-y: auto;     /* scroll vertikal aktif */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Sub-halaman di dalamnya */
+.pita-page {
+    display: none;
+    margin-top: 20px;
+    animation: fadeUp 0.5s ease forwards;
+}
+
+.pita-page.show {
+    display: block;
+}
+
+/* Gallery aesthetic */
+.ribbon-content{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+}
+
+.ribbon-content img{
+    width:140px;
+    border-radius:20px;
+    box-shadow:0 15px 35px rgba(255,105,135,0.3);
+    transition: transform 0.3s, filter 0.3s;
+    filter: brightness(0.95) contrast(1.1);
+}
+
+.ribbon-content img:hover{
+    transform:scale(1.05) rotate(-2deg);
+    filter: brightness(1.1) contrast(1.2);
+}
+
+/* Responsive */
+@media(max-width:768px){
+    .ribbon-content img{
+        width:120px;
+}
+
+/* Judul sub-halaman Pita */
+.pita-page h3 {
+    color: #ff4d88;      /* pink pekat */
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-shadow: 0 4px 10px rgba(255,105,135,0.3);
+    font-weight: 600;
+}
+
+/* ===================== */
+/* ROSE PAGE UPGRADE */
+/* ===================== */
+
+.rose-title{
+    margin-top:60px;
+    font-size:22px;
+    letter-spacing:2px;
+    color:#b03060;
+}
+
+.rose-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:30px;
+    margin-top:40px;
+    flex-wrap:wrap;
+}
+
+.rose-bg{
+    background:#f06292; /* pink pekat */
+    padding:30px;
+    border-radius:25px;
+    box-shadow:0 20px 40px rgba(255,105,135,0.35);
+}
+
+.rose-center img{
+    width:200px;
+}
+
+.rose-messages{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.msg{
+    background:white;
+    padding:10px 15px;
+    border-radius:15px;
+    box-shadow:0 8px 20px rgba(255,105,135,0.2);
+    font-size:13px;
+    max-width:150px;
+    opacity:0;
+    transform:translateY(10px);
+    animation:fadeUp 0.8s forwards;
+}
+
+/* delay biar muncul satu-satu */
+.rose-messages .msg:nth-child(1){ animation-delay:0.3s; }
+.rose-messages .msg:nth-child(2){ animation-delay:0.8s; }
+.rose-messages .msg:nth-child(3){ animation-delay:1.3s; }
+
+@keyframes fadeUp{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* Responsive */
+@media(max-width:768px){
+
+    .rose-container{
+        flex-direction:column;
+    }
+
+    .rose-messages{
+        flex-direction:row;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .msg{
+        max-width:120px;
+        font-size:12px;
+    }
+
+    .rose-center img{
+        width:170px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+  
+<!-- HTML -->
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ===================== -->
+<!-- PAGE 1 -->
+<!-- ===================== -->
+
+<div id="page1" class="page active valentine-page">
+
+    <img src="hearts.png" class="decor-left">
+    <img src="envelope.png" class="decor-right">
+    <img src="plane.png" class="decor-bottom">
+  
+    <p class="for-name">For Reina 💌</p>
+    <h1 class="title">Will you be my Valentine? 💕</h1>
+  
+    <button onclick="goTo('main')" class="yes-btn">YES PLEASE</button>
+    <button onclick="goTo('page2')" class="no-btn">NO THANK YOU</button>
+
+</div>
+
+<!-- ===================== -->
+<!-- PAGE 2 (NO) -->
+<!-- ===================== -->
+
+<div id="page2" class="page">
+    <img src="cute.gif" width="130">
+    <h2>Hei rerei aku jamin kamu bakal menyukainya😏🥺</h2>
+    <button onclick="goTo('page1')">Try Again</button>
+</div>
+
+<!-- ===================== -->
+<!-- MAIN MENU -->
+<!-- ===================== -->
+
+<div id="main" class="page">
+
+    <!-- Hiasan foto di 4 sudut -->
+    <img src="hiasan1.png" class="menu-decor top-left">
+    <img src="hiasan2.png" class="menu-decor top-right">
+    <img src="hiasan3.png" class="menu-decor bottom-left">
+    <img src="hiasan4.png" class="menu-decor bottom-right">
+
+    <h2 style="margin-top:80px;">I made these for you 💌</h2>
+
+    <div class="card-container">
+        <div class="card" onclick="goTo('foto')">📸</div>
+        <div class="card" onclick="goTo('surat')">💌</div>
+        <div class="card" onclick="goTo('pita')">🎀</div>
+        <div class="card" onclick="goTo('bunga')">🌸</div>
+    </div>
+</div>
+
+<!-- ===================== -->
+<!-- FOTO -->
+<!-- ===================== -->
+
+<div id="foto" class="page">
+
+    <h2 style="margin-top:80px;">Foto kita nanti 📸💖</h2>
+
+    <div class="gallery">
+
+        <img src="foto1.jpg">
+        <img src="foto2.jpg">
+        <img src="foto3.jpg">
+        <img src="foto4.jpg">
+        <img src="foto5.jpg">
+        <img src="foto6.jpg">
+        <img src="foto7.jpg">
+        <img src="foto8.jpg">
+        <img src="foto9.jpg">
+        <img src="foto10.jpg">
+
+    </div>
+
+    <button onclick="goTo('main')">Back</button>
+
+</div>
+
+<!-- ===================== -->
+<!-- SURAT -->
+<!-- ===================== -->
+
+<div id="surat" class="page scroll-page">
+
+    <div class="letter-header">
+        <h2>To Reina Amelia 💌</h2>
+        <p>
+            I wrote something special for you.
+            Scroll down slowly and read it with your heart 💗
+        </p>
+    </div>
+
+    <div class="single-letter">
+        <img src="surat.jpg">
+    </div>
+
+    <button onclick="goTo('main')">Back</button>
+
+</div>
+
+<!-- ===================== -->
+<!-- PITA -->
+<!-- ===================== -->
+
+<div id="pita" class="page">
+
+    <h2 class="rose-title">Memories 🎀</h2>
+
+    <!-- Menu sub-halaman -->
+    <div class="pita-menu">
+        <button onclick="openPitaPage('reina')">Foto Reina</button>
+        <button onclick="openPitaPage('jikoo')">Foto Jikoo</button>
+        <button onclick="openPitaPage('simba')">Foto Simba, Nala & Tiger</button>
+        <button onclick="openPitaPage('game')">Foto Game</button>
+    </div>
+
+    <!-- Sub-halaman Pita -->
+    <div id="reina" class="pita-page hidden">
+        <h3>Foto Reina 💖</h3>
+        <div class="ribbon-content">
+            <img src="reina1.jpg">
+            <img src="reina2.jpg">
+            <img src="reina3.jpg">
+            <img src="reina4.jpg">
+            <img src="reina5.jpg">
+            <img src="reina6.jpg">
+            <img src="reina7.jpg">
+            <img src="reina8.jpg">
+            <img src="reina9.jpg">
+            <img src="reina10.jpg">
+        </div>
+    </div>
+
+    <div id="jikoo" class="pita-page hidden">
+        <h3>Foto Jikoo 🐶</h3>
+        <div class="ribbon-content">
+            <img src="jikoo1.jpg">
+            <img src="jikoo2.jpg">
+            <img src="jikoo3.jpg">
+            <img src="jikoo4.jpg">
+            <img src="jikoo5.jpg">
+            <img src="jikoo6.jpg">
+            <img src="jikoo7.jpg">
+            <img src="jikoo8.jpg">
+            <img src="jikoo9.jpg">
+            <img src="jikoo10.jpg">
+        </div>
+    </div>
+
+    <div id="simba" class="pita-page hidden">
+        <h3>Foto Simba, Nala & Tiger 🐾</h3>
+        <div class="ribbon-content">
+            <img src="simba1.jpg">
+            <img src="nala1.jpg">
+            <img src="tiger1.jpg">
+            <img src="simba2.jpg">
+            <img src="nala2.jpg">
+            <img src="tiger2.jpg">
+            <img src="simba3.jpg">
+            <img src="nala3.jpg">
+            <img src="tiger3.jpg">
+            <img src="simba4.jpg">
+        </div>
+    </div>
+
+    <div id="game" class="pita-page hidden">
+        <h3>Foto Game 🎮</h3>
+        <div class="ribbon-content">
+            <img src="game1.jpg">
+            <img src="game2.jpg">
+            <img src="game3.jpg">
+            <img src="game4.jpg">
+            <img src="game5.jpg">
+            <img src="game6.jpg">
+            <img src="game7.jpg">
+            <img src="game8.jpg">
+            <img src="game9.jpg">
+            <img src="game10.jpg">
+        </div>
+    </div>
+
+    <button onclick="goTo('main')">Back</button>
+</div>
+
+<!-- ===================== -->
+<!-- BUNGA -->
+<!-- ===================== -->
+
+<div id="bunga" class="page">
+
+    <h2 class="rose-title">YOUR ROSE BOUQUET</h2>
+
+    <div class="rose-container">
+
+        <!-- LEFT -->
+        <div class="rose-messages left">
+            <div class="msg">kamu adalah cinta terakhiku 💗</div>
+            <div class="msg">aku akan selalu ada untukmu ❤️</div>
+            <div class="msg">aku sangat mencintaimu sampai kapanpun 💞</div>
+        </div>
+
+        <!-- CENTER -->
+        <div class="rose-center">
+            <div class="rose-bg">
+                <img src="rose.png">
+            </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="rose-messages right">
+            <div class="msg">Kaulah hari ini dan semua hari esokku 💌</div>
+            <div class="msg">tanpamu hidupku akan membosankan 💕</div>
+            <div class="msg">You're my favorite person, always 💖</div>
+        </div>
+
+    </div>
+
+    <button onclick="goTo('main')">Back</button>
+
+</div>
+
+<script>
+function goTo(page){
+    document.querySelectorAll('.page').forEach(p=>{
+        p.classList.remove('active');
+    });
+    document.getElementById(page).classList.add('active');
+}
+
+function openPitaPage(pageId){
+    document.querySelectorAll('.pita-page').forEach(p => p.classList.remove('show'));
+    document.getElementById(pageId).classList.add('show');
+}
+
+// JS
+const music = document.getElementById('bgMusic');
+
+// Mulai musik saat pertama kali layar disentuh / diklik
+document.body.addEventListener("click", function startMusic() {
+  music.play();
+  // Hapus listener biar cuma dipanggil sekali
+  document.body.removeEventListener("click", startMusic);
+});
+
+</script>
+
+</body>
+</html>
